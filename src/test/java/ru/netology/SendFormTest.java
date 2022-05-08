@@ -1,5 +1,6 @@
 package ru.netology;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +17,7 @@ public class SendFormTest {
 
     @BeforeAll
     static void setUp() {
-        System.setProperty("webdriver.chrome.driver", "./driver/win/chromedriver.exe");
+        WebDriverManager.chromedriver().setup();
     }
 
     @BeforeEach
@@ -26,6 +27,7 @@ public class SendFormTest {
         options.addArguments("--no-sandbox");
         options.addArguments("--headless");
         driver = new ChromeDriver(options);
+        driver.get("http://localhost:9999");
     }
 
     @AfterEach
@@ -36,8 +38,7 @@ public class SendFormTest {
 
     @Test
     public void shouldPassWhenAllDataCorrect() {
-        driver.get("http://localhost:9999");
-        driver.findElement(By.cssSelector("[data-test-id=\"name\"] input")).sendKeys("Алёша Попович");
+        driver.findElement(By.cssSelector("[data-test-id=\"name\"] input")).sendKeys("Василий Попович");
         driver.findElement(By.cssSelector("[data-test-id=\"phone\"] input")).sendKeys("+79886752435");
         driver.findElement(By.cssSelector("[data-test-id=\"agreement\"]")).click();
         driver.findElement(By.cssSelector("button")).click(); // send form
