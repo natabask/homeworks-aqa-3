@@ -13,7 +13,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SendFormTest {
-    private WebDriver driver;
+    WebDriver driver;
 
     @BeforeAll
     static void setUp() {
@@ -27,7 +27,6 @@ public class SendFormTest {
         options.addArguments("--no-sandbox");
         options.addArguments("--headless");
         driver = new ChromeDriver(options);
-        driver.get("http://localhost:9999");
     }
 
     @AfterEach
@@ -38,6 +37,7 @@ public class SendFormTest {
 
     @Test
     public void shouldPassWhenAllDataCorrect() {
+        driver.get("http://localhost:9999");
         driver.findElement(By.cssSelector("[data-test-id=\"name\"] input")).sendKeys("Василий Попович");
         driver.findElement(By.cssSelector("[data-test-id=\"phone\"] input")).sendKeys("+79886752435");
         driver.findElement(By.cssSelector("[data-test-id=\"agreement\"]")).click();
