@@ -1,32 +1,28 @@
 package ru.netology;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static com.codeborne.selenide.Condition.exactText;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 
 public class SendFormTest {
-    WebDriver driver;
+
+    private WebDriver driver;
 
     @BeforeAll
     static void setUp() {
-        System.setProperty("webdriver.chrome.driver", "./driver/linux/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "./driver/win/chromedriver.exe");
     }
 
     @BeforeEach
     void setUp2() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--no-sandbox");
-        options.addArguments("--headless");
-        driver = new ChromeDriver(options);
+        driver = new ChromeDriver();
     }
 
     @AfterEach
@@ -37,12 +33,11 @@ public class SendFormTest {
 
     @Test
     public void shouldPassWhenAllDataCorrect() {
-        driver.get("http://localhost:9999");
-        driver.findElement(By.cssSelector("[data-test-id=\"name\"] input")).sendKeys("Василий Попович");
-        driver.findElement(By.cssSelector("[data-test-id=\"phone\"] input")).sendKeys("+79886752435");
-        driver.findElement(By.cssSelector("[data-test-id=\"agreement\"]")).click();
-        driver.findElement(By.cssSelector("button")).click(); // send form
-        String text = driver.findElement(By.cssSelector("[data-test-id=\"order-success\"]")).getText();
-        assertEquals("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.", text.trim());
+        open("http://localhost:9999");
+        $("[data-test-id=name] input").setValue("Василий Попович");
+        $("[data-test-id=phone] input").setValue("+79886752435");
+        $("[data-test-id=\"agreement\"]").click();
+        $("button").click(); // send form
+        $("[data-test-id=\"order-success\"]").shouldHave(exactText("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время."));
     }
 }
