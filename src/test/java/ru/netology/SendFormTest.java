@@ -17,7 +17,7 @@ public class SendFormTest {
 
     @BeforeAll
     static void setUp() {
-        WebDriverManager.chromedriver().setup();
+        System.setProperty("webdriver.chrome.driver", "./driver/linux/chromedriver");
     }
 
     @BeforeEach
