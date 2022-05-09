@@ -1,1 +1,1 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/17td9uspkg4t30av?svg=true)](https://ci.appveyor.com/project/natabask/homeworks-aqa-3-1sq2q)
+[![Build status](https://ci.appveyor.com/api/projects/status/375asg370a49gvu8?svg=true)](https://ci.appveyor.com/project/natabask/homeworks-aqa-3)
